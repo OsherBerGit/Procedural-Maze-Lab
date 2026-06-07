@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://dy0ko6p3f0pjo"]
+
+[ext_resource type="Texture2D" uid="uid://ctn6w1h266pty" path="res://resources/Textures-16.png" id="1_2uu6k"]
+[ext_resource type="Script" uid="uid://rrwxnmdqej5b" path="res://scenes/main_lab.gd" id="1_lndg2"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lndg2"]
+texture = ExtResource("1_2uu6k")
+9:4/next_alternative_id = 3
+9:4/0 = 0
+7:12/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_k6skw"]
+sources/1 = SubResource("TileSetAtlasSource_lndg2")
+
+[node name="MainLab" type="Node2D" unique_id=816204347]
+script = ExtResource("1_lndg2")
+
+[node name="MazeRenderer" type="TileMapLayer" parent="." unique_id=1404142117]
+tile_set = SubResource("TileSet_k6skw")
+
+[node name="UILayer" type="CanvasLayer" parent="." unique_id=1657634653]
+
+[node name="ControlPanel" type="Panel" parent="UILayer" unique_id=21869399]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SeedInput" type="LineEdit" parent="UILayer/ControlPanel" unique_id=1711009205]
+layout_mode = 0
+offset_right = 68.5
+offset_bottom = 31.0
+
+[node name="WidthInput" type="SpinBox" parent="UILayer/ControlPanel" unique_id=1231888848]
+layout_mode = 0
+offset_right = 86.5
+offset_bottom = 31.0
+
+[node name="HeightInput" type="SpinBox" parent="UILayer/ControlPanel" unique_id=1690375657]
+layout_mode = 0
+offset_right = 86.5
+offset_bottom = 31.0
+
+[node name="GenerateButton" type="Button" parent="UILayer/ControlPanel" unique_id=1324495649]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
