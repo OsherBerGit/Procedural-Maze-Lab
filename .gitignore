@@ -1,0 +1,41 @@
+# SCons Build Cache & C++ Toolchain Artifacts
+.sconsign.dblite
+src/**/*.obj
+src/**/*.o
+src/**/*.pdb
+src/**/*.idb
+*.obj
+*.o
+*.pdb
+
+# Compiled Dynamic Libraries (GDExtension Binaries)
+client/bin/*.dll
+client/bin/*.so
+client/bin/*.dylib
+client/bin/*.exp
+client/bin/*.lib
+client/bin/*.pyd
+
+# Godot 4 Automatic, Local, and Import Metadata
+.godot/
+*.translation
+*.import
+*.uid
+
+# IDEs & Editor Settings (CLion / VS Code / Visual Studio)
+.idea/
+.vscode/
+*.user
+*.suo
+*.sln
+*.vcxproj
+*.vcxproj.filters
+cmake-build-debug/
+cmake-build-release/
+CMakeCache.txt
+CMakeFiles/
+
+# OS Generated Files
+Thumbs.db
+Desktop.ini
+.DS_Store
