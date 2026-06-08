@@ -2,6 +2,7 @@
 #include "../core/IMazeGeneratorStrategy.h"
 #include "../core/DFSMazeStrategy.h"
 #include "../core/CellularAutomataStrategy.h"
+#include "../core/MazeValidator.h"
 #include <memory>
 
 namespace godot {

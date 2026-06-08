@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cstdint>
+#include <random>
 #include "MazeTypes.h"
 
 class MazeValidator {

@@ -1,6 +1,7 @@
 #include "MazeValidator.h"
 #include <queue>
 #include <random>
+#include <array>
 
 int MazeValidator::get_index(int x, int y, int width) const { return y * width + x; }
 
