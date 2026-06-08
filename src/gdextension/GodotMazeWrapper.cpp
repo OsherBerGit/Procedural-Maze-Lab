@@ -49,8 +49,6 @@ namespace godot {
             fallback->generate(maze_data, width, height, seed);
             validator.validate_and_place_points(maze_data, width, height, seed);
         }
-
-        strategy->generate(maze_data, width, height, seed);
     }
 
     PackedByteArray GodotMazeWrapper::get_maze_data() const {

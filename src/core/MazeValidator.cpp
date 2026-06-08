@@ -55,8 +55,8 @@ bool MazeValidator::validate_and_place_points(std::vector<uint8_t>& grid, int wi
     std::mt19937 rng(seed);
 
     for (int i = 0; i < attempts; ++i) {
-        GridCoord start = find_valid_point_in_column(grid, width, height, 1, width / 2 - 1, rng);
-        GridCoord end = find_valid_point_in_column(grid, width, height, width / 2 + 1, width - 2, rng);
+        GridCoord start = find_valid_point_in_column(grid, width, height, 1, 2, rng);
+        GridCoord end = find_valid_point_in_column(grid, width, height, width - 3, width - 2, rng);
 
         if (run_bfs(grid, width, height, start, end)) {
             grid[get_index(start.x, start.y, width)] = static_cast<uint8_t>(CellType::START);

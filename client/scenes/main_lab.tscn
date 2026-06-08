@@ -1,13 +1,18 @@
 [gd_scene format=3 uid="uid://dy0ko6p3f0pjo"]
 
 [ext_resource type="Texture2D" uid="uid://ctn6w1h266pty" path="res://resources/Textures-16.png" id="1_2uu6k"]
-[ext_resource type="Script" uid="uid://rrwxnmdqej5b" path="res://scenes/main_lab.gd" id="1_lndg2"]
+[ext_resource type="Script" uid="uid://rrwxnmdqej5b" path="res://scripts/Main_Lab.gd" id="1_lndg2"]
+[ext_resource type="Texture2D" uid="uid://eq7mv3738u7w" path="res://icon.svg" id="3_k6skw"]
+[ext_resource type="Script" uid="uid://dkiyev3j80h8j" path="res://scripts/UI_Controller.gd" id="3_lndg2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lndg2"]
 texture = ExtResource("1_2uu6k")
 9:4/next_alternative_id = 3
 9:4/0 = 0
 7:12/0 = 0
+3:11/0 = 0
+1:14/0 = 0
+6:24/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_k6skw"]
 sources/1 = SubResource("TileSetAtlasSource_lndg2")
@@ -15,31 +20,82 @@ sources/1 = SubResource("TileSetAtlasSource_lndg2")
 [node name="MainLab" type="Node2D" unique_id=816204347]
 script = ExtResource("1_lndg2")
 
+[node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=890997136]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="BackgroundLayer" unique_id=1733088243]
+z_index = -1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.99999994, 0.80286765, 0.41395557, 1)
+
+[node name="IconSprite" type="Sprite2D" parent="." unique_id=1444444659]
+z_index = 2
+scale = Vector2(2.4, 2.4)
+texture = ExtResource("3_k6skw")
+
 [node name="MazeRenderer" type="TileMapLayer" parent="." unique_id=1404142117]
 tile_set = SubResource("TileSet_k6skw")
 
-[node name="UILayer" type="CanvasLayer" parent="." unique_id=1657634653]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1657634653]
 
-[node name="ControlPanel" type="Panel" parent="UILayer" unique_id=21869399]
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="UI_Root" type="Control" parent="CanvasLayer" unique_id=636318472]
+layout_direction = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="SeedInput" type="LineEdit" parent="UILayer/ControlPanel" unique_id=1711009205]
-layout_mode = 0
-offset_right = 68.5
-offset_bottom = 31.0
+[node name="ControlPanel" type="PanelContainer" parent="CanvasLayer/UI_Root" unique_id=1168406842]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -86.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("3_lndg2")
 
-[node name="WidthInput" type="SpinBox" parent="UILayer/ControlPanel" unique_id=1231888848]
-layout_mode = 0
-offset_right = 86.5
-offset_bottom = 31.0
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/UI_Root/ControlPanel" unique_id=281794088]
+layout_mode = 2
 
-[node name="HeightInput" type="SpinBox" parent="UILayer/ControlPanel" unique_id=1690375657]
-layout_mode = 0
-offset_right = 86.5
-offset_bottom = 31.0
+[node name="SeedInput" type="LineEdit" parent="CanvasLayer/UI_Root/ControlPanel/VBoxContainer" unique_id=1711009205]
+layout_mode = 2
+placeholder_text = "Seed"
 
-[node name="GenerateButton" type="Button" parent="UILayer/ControlPanel" unique_id=1324495649]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="WidthLabel" type="Label" parent="CanvasLayer/UI_Root/ControlPanel/VBoxContainer" unique_id=967844619]
+layout_mode = 2
+text = "Width"
+
+[node name="WidthInput" type="SpinBox" parent="CanvasLayer/UI_Root/ControlPanel/VBoxContainer" unique_id=1231888848]
+layout_mode = 2
+
+[node name="HeightLabel" type="Label" parent="CanvasLayer/UI_Root/ControlPanel/VBoxContainer" unique_id=852680264]
+layout_mode = 2
+text = "Height"
+
+[node name="HeightInput" type="SpinBox" parent="CanvasLayer/UI_Root/ControlPanel/VBoxContainer" unique_id=1690375657]
+layout_mode = 2
+
+[node name="AlgoLabel" type="Label" parent="CanvasLayer/UI_Root/ControlPanel/VBoxContainer" unique_id=1569025356]
+layout_mode = 2
+text = "Algorithm"
+
+[node name="AlgoSelector" type="OptionButton" parent="CanvasLayer/UI_Root/ControlPanel/VBoxContainer" unique_id=1693355199]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "DFS"
+popup/item_0/id = 0
+popup/item_1/text = "Cellular Automata"
+popup/item_1/id = 1
+
+[node name="GenerateButton" type="Button" parent="CanvasLayer/UI_Root/ControlPanel/VBoxContainer" unique_id=1324495649]
+layout_mode = 2
+text = "Generate"
