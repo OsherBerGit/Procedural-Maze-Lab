@@ -22,8 +22,10 @@ script = ExtResource("1_lndg2")
 
 [node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=890997136]
 layer = -1
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="BackgroundLayer" unique_id=1733088243]
+visible = false
 z_index = -1
 anchors_preset = 15
 anchor_right = 1.0

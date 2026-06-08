@@ -6,10 +6,19 @@
 
 class MazeValidator {
 private:
+    GridCoord start_point = {0, 0};
+    GridCoord end_point = {0, 0};
+
     GridCoord find_valid_point_in_column(const std::vector<uint8_t>& grid, int width, int height, int start_col, int end_col, std::mt19937& rng);
     bool run_bfs(const std::vector<uint8_t>& grid, int width, int height, GridCoord start, GridCoord end);
     int get_index(int x, int y, int width) const;
 
 public:
+    MazeValidator() = default;
+    ~MazeValidator() = default;
+
     bool validate_and_place_points(std::vector<uint8_t>& grid, int width, int height, uint32_t seed);
+
+    GridCoord get_start_point() const { return start_point; }
+    GridCoord get_end_point() const { return end_point; }
 };

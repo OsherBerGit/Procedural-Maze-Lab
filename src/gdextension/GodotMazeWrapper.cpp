@@ -3,6 +3,7 @@
 #include "../core/DFSMazeStrategy.h"
 #include "../core/CellularAutomataStrategy.h"
 #include "../core/MazeValidator.h"
+#include "../core/MazeTypes.h"
 #include <memory>
 
 namespace godot {
@@ -60,6 +61,18 @@ namespace godot {
     }
 
     PackedByteArray GodotMazeWrapper::get_maze_data() const {
+        PackedInt32Array arr;
+        arr.resize(generation_history.size() * 3);
+        int idx = 0;
+        for (const auto& step : generation_history) {
+            arr[idx++] = step.x;
+            arr[idx++] = step.y;
+            arr[idx++] = step.type;
+        }
+        return arr;
+    }
+
+    PackedInt32Array GodotMazeWrapper::get_generation_history() const {
         PackedInt32Array arr;
         arr.resize(generation_history.size() * 3);
         int idx = 0;

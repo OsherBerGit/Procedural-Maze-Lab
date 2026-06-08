@@ -61,6 +61,10 @@ bool MazeValidator::validate_and_place_points(std::vector<uint8_t>& grid, int wi
         if (run_bfs(grid, width, height, start, end)) {
             grid[get_index(start.x, start.y, width)] = static_cast<uint8_t>(CellType::START);
             grid[get_index(end.x, end.y, width)] = static_cast<uint8_t>(CellType::END);
+
+            start_point = start;
+            end_point = end;
+
             return true;
         }
     }

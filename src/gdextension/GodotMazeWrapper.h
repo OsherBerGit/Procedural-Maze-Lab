@@ -1,9 +1,10 @@
 #pragma once
-#include <godot_cpp/classes/ref_counted.hpp>
+#include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/packed_byte_array.hpp>
+#include <godot_cpp/variant/packed_int32_array.hpp>
 #include <vector>
-#include <cstdint>
+#include "../core/MazeTypes.h"
 
 namespace godot {
 
