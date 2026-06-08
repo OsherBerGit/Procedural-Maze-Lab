@@ -12,6 +12,7 @@ const DEFAULT_MAP_SIZE = 21
 @onready var maze_layer = $MazeRenderer
 @onready var ui_controller = $CanvasLayer/UI_Root/ControlPanel
 @onready var icon_sprite = $IconSprite
+@onready var camera = $Camera2D
 
 var maze_engine = null
 var task_id: int = -1
@@ -27,6 +28,8 @@ func _ready() -> void:
 		maze_engine = ClassDB.instantiate("GodotMazeWrapper")
 		
 	ui_controller.generate_maze_requested.connect(_generate_new_maze)
+	
+	maze_layer.position = Vector2.ZERO
 	call_deferred("_setup_initial_screen")
 
 func _process(delta: float) -> void:
@@ -84,20 +87,19 @@ func _animate_build_steps() -> void:
 	if current_step_index >= generation_history.size():
 		is_building = false
 
-func _center_maze(w: int, h: int) -> void:
+func _center_maze_camera(w: int, h: int) -> void:
 	var maze_pixel_width = w * TILE_SIZE
 	var maze_pixel_height = h * TILE_SIZE
-	var screen_size = get_window().size
-	var center_x = (screen_size.x / 2.0) - (maze_pixel_width / 2.0) - 100
-	var center_y = (screen_size.y / 2.0) - (maze_pixel_height / 2.0)
-	maze_layer.position = Vector2(center_x, center_y)
+	
+	if camera and camera.has_method("center_on_target"):
+		camera.center_on_target(maze_pixel_width, maze_pixel_height)
 
 func _draw_solid_walls(w: int, h: int) -> void:
 	maze_layer.clear()
 	for y in range(h):
 		for x in range(w):
 			maze_layer.set_cell(Vector2i(x, y), SOURCE_ID, WALL_ATLAS_COORD)
-	_center_maze(w, h)
+	_center_maze_camera(w, h)
 
 func _setup_initial_screen() -> void:
 	var w = DEFAULT_MAP_SIZE
@@ -106,10 +108,11 @@ func _setup_initial_screen() -> void:
 	for y in range(h):
 		for x in range(w):
 			maze_layer.set_cell(Vector2i(x, y), SOURCE_ID, BLANK_ATLAS_COORD)
-	_center_maze(w, h)
+			
+	_center_maze_camera(w, h)
 	
 	if icon_sprite:
 		icon_sprite.visible = true
 		var maze_pixel_width = w * TILE_SIZE
 		var maze_pixel_height = h * TILE_SIZE
-		icon_sprite.position = maze_layer.position + Vector2(maze_pixel_width / 2.0, maze_pixel_height / 2.0)
+		icon_sprite.position = Vector2(maze_pixel_width / 2.0, maze_pixel_height / 2.0)

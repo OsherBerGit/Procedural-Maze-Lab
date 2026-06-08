@@ -1,9 +1,10 @@
 [gd_scene format=3 uid="uid://dy0ko6p3f0pjo"]
 
 [ext_resource type="Texture2D" uid="uid://ctn6w1h266pty" path="res://resources/Textures-16.png" id="1_2uu6k"]
-[ext_resource type="Script" uid="uid://rrwxnmdqej5b" path="res://scripts/Main_Lab.gd" id="1_lndg2"]
+[ext_resource type="Script" uid="uid://rrwxnmdqej5b" path="res://scripts/main_lab.gd" id="1_lndg2"]
 [ext_resource type="Texture2D" uid="uid://eq7mv3738u7w" path="res://icon.svg" id="3_k6skw"]
-[ext_resource type="Script" uid="uid://dkiyev3j80h8j" path="res://scripts/UI_Controller.gd" id="3_lndg2"]
+[ext_resource type="Script" uid="uid://dkiyev3j80h8j" path="res://scripts/ui_controller.gd" id="3_lndg2"]
+[ext_resource type="Script" uid="uid://d0y7u4i1nwmbn" path="res://scripts/camera_controller.gd" id="5_0gpj4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lndg2"]
 texture = ExtResource("1_2uu6k")
@@ -50,6 +51,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="ControlPanel" type="PanelContainer" parent="CanvasLayer/UI_Root" unique_id=1168406842]
 custom_minimum_size = Vector2(250, 0)
@@ -109,3 +111,6 @@ value = 0.02
 [node name="GenerateButton" type="Button" parent="CanvasLayer/UI_Root/ControlPanel/VBoxContainer" unique_id=1324495649]
 layout_mode = 2
 text = "Generate"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=749119292]
+script = ExtResource("5_0gpj4")
