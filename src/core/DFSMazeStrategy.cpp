@@ -1,8 +1,8 @@
+#include "DFSMazeStrategy.h"
 #include <stack>
 #include <algorithm>
 #include <array>
 #include <random>
-#include "DFSMazeStrategy.h"
 
 int DFSMazeStrategy::get_index(int x, int y, int width) const { return y * width + x; }
 

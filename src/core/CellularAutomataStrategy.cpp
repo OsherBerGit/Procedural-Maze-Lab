@@ -1,5 +1,5 @@
-#include <random>
 #include "CellularAutomataStrategy.h"
+#include <random>
 
 int CellularAutomataStrategy::get_index(int x, int y, int width) const { return y * width + x; }
 

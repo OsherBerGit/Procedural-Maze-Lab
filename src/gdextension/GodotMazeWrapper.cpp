@@ -29,6 +29,26 @@ namespace godot {
                 break;
         }
 
+        MazeValidator validator;
+        uint32_t current_seed = seed;
+        bool is_valid = false;
+
+        for (int i = 0; i < 10; ++i) {
+            strategy->generate(maze_data, width, height, current_seed);
+
+            if (validator.validate_and_place_points(maze_data, width, height, current_seed)) {
+                is_valid = true;
+                break;
+            }
+            current_seed++;
+        }
+
+        if (!is_valid) {
+            auto fallback = std::make_unique<DFSMazeStrategy>();
+            fallback->generate(maze_data, width, height, seed);
+            validator.validate_and_place_points(maze_data, width, height, seed);
+        }
+
         strategy->generate(maze_data, width, height, seed);
     }
 
