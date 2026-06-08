@@ -7,11 +7,12 @@
 
 namespace godot {
 
-    class GodotMazeWrapper : public RefCounted {
-        GDCLASS(GodotMazeWrapper, RefCounted);
+    class GodotMazeWrapper : public Node2D {
+        GDCLASS(GodotMazeWrapper, Node2D);
 
     private:
         std::vector<uint8_t> maze_data;
+        std::vector<MazeStep> generation_history;
 
     protected:
         static void _bind_methods();
@@ -22,6 +23,7 @@ namespace godot {
 
         void generate_maze(int width, int height, uint32_t seed, int strategy_type);
         PackedByteArray get_maze_data() const;
+        PackedInt32Array get_generation_history() const;
     };
 
 }

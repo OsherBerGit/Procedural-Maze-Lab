@@ -6,5 +6,5 @@
 class IMazeGeneratorStrategy {
 public:
     virtual ~IMazeGeneratorStrategy() = default;
-    virtual void generate(std::vector<uint8_t>& grid_data, int width, int height, uint32_t seed) = 0;
+    virtual void generate(std::vector<uint8_t>& grid_data, int width, int height, uint32_t seed, std::vector<MazeStep>& history) = 0;
 };

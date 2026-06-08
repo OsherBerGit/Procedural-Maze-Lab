@@ -12,3 +12,9 @@ struct GridCoord {
     int x;
     int y;
 };
+
+struct MazeStep {
+    int32_t x;
+    int32_t y;
+    uint8_t type;
+};

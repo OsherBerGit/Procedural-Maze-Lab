@@ -24,16 +24,20 @@ int CellularAutomataStrategy::count_alive_neighbors(const std::vector<uint8_t>& 
     return count;
 }
 
-void CellularAutomataStrategy::generate(std::vector<uint8_t>& grid_data, int width, int height, uint32_t seed) {
+void CellularAutomataStrategy::generate(std::vector<uint8_t>& grid_data, int width, int height, uint32_t seed, std::vector<MazeStep>& history) {
     const int fill_probability = 45;
     const int smooth_iterations = 5;
     const int wall_threshold = 4;
 
     std::mt19937 rng(seed);
 
-    for (int x = 0; x < width; ++x)
-        for (int y = 0; y < height; ++y)
-            grid_data[get_index(x, y, width)] = rng() % 100 < fill_probability ? static_cast<uint8_t>(CellType::WALL) : static_cast<uint8_t>(CellType::PATH);
+    for (int x = 0; x < width; ++x) {
+        for (int y = 0; y < height; ++y) {
+            uint8_t cell_val = rng() % 100 < fill_probability ? static_cast<uint8_t>(CellType::WALL) : static_cast<uint8_t>(CellType::PATH);
+            grid_data[get_index(x, y, width)] = cell_val;
+            history.push_back({x, y, cell_val});
+        }
+    }
 
     for (int i = 0; i < smooth_iterations; ++i) {
         std::vector<uint8_t> new_grid = grid_data;
@@ -42,10 +46,17 @@ void CellularAutomataStrategy::generate(std::vector<uint8_t>& grid_data, int wid
             for (int y = 0; y < height; ++y) {
                 int count = count_alive_neighbors(grid_data, x, y, width, height);
 
+                uint8_t new_val = new_grid[get_index(x, y, width)];
+
                 if (count > wall_threshold)
-                    new_grid[get_index(x, y, width)] = static_cast<uint8_t>(CellType::WALL);
+                    new_val = static_cast<uint8_t>(CellType::WALL);
                 else if (count < wall_threshold)
-                    new_grid[get_index(x, y, width)] = static_cast<uint8_t>(CellType::PATH);
+                    new_val = static_cast<uint8_t>(CellType::PATH);
+
+                if (new_val != grid_data[get_index(x, y, width)]) {
+                    new_grid[get_index(x, y, width)] = new_val;
+                    history.push_back({x, y, new_val});
+                }
             }
         }
 
