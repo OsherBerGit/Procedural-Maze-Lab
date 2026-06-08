@@ -20,7 +20,7 @@ namespace godot {
         GodotMazeWrapper() = default;
         ~GodotMazeWrapper() = default;
 
-        void generate_maze(int width, int height, uint32_t seed);
+        void generate_maze(int width, int height, uint32_t seed, int strategy_type);
         PackedByteArray get_maze_data() const;
     };
 

@@ -7,13 +7,11 @@
 int DFSMazeStrategy::get_index(int x, int y, int width) const { return y * width + x; }
 
 void DFSMazeStrategy::generate(std::vector<uint8_t>& grid_data, int width, int height, uint32_t seed) {
+    static const std::array<GridCoord, 4> master_dirs = { GridCoord{0, -2}, GridCoord{0, 2}, GridCoord{-2, 0}, GridCoord{2, 0} };
     std::mt19937 rng(seed);
+    std::stack<GridCoord> stack;
 
     grid_data.assign(width * height, static_cast<uint8_t>(CellType::WALL));
-
-    static const std::array<GridCoord, 4> master_dirs = { GridCoord{0, -2}, GridCoord{0, 2}, GridCoord{-2, 0}, GridCoord{2, 0} };
-
-    std::stack<GridCoord> stack;
 
     grid_data[get_index(1, 1, width)] = static_cast<uint8_t>(CellType::PATH);
     stack.push({1, 1});
