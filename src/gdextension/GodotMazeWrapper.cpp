@@ -1,34 +1,25 @@
 #include "GodotMazeWrapper.h"
-#include <cstring>
+#include "../core/DFSMazeStrategy.h"
 
-using namespace godot;
+namespace godot {
 
-void GodotMazeWrapper::_bind_methods() {
-    ClassDB::bind_method(D_METHOD("generate_maze", "width", "height", "seed"), &GodotMazeWrapper::generate_maze);
-    ClassDB::bind_method(D_METHOD("get_maze_data"), &GodotMazeWrapper::get_maze_data);
-}
+    void GodotMazeWrapper::_bind_methods() {
+        ClassDB::bind_method(D_METHOD("generate_maze", "width", "height", "seed"), &GodotMazeWrapper::generate_maze);
+        ClassDB::bind_method(D_METHOD("get_maze_data"), &GodotMazeWrapper::get_maze_data);
+    }
 
-GodotMazeWrapper::GodotMazeWrapper() { }
+    void GodotMazeWrapper::generate_maze(int width, int height, uint32_t seed) {
+        maze_data.resize(width * height);
+        DFSMazeStrategy strategy;
+        strategy.generate(maze_data, width, height, seed);
+    }
 
-GodotMazeWrapper::~GodotMazeWrapper() { }
-
-void GodotMazeWrapper::generate_maze(int width, int height, int seed) {
-    engine = std::make_unique<MazeEngine>(width, height, seed);
-
-    engine->initialize_grid();
-    engine->generate_dfs();
-}
-
-PackedByteArray GodotMazeWrapper::get_maze_data() const {
-    PackedByteArray arr;
-
-    if (!engine)
+    PackedByteArray GodotMazeWrapper::get_maze_data() const {
+        PackedByteArray arr;
+        arr.resize(maze_data.size());
+        for (size_t i = 0; i < maze_data.size(); ++i)
+            arr[i] = maze_data[i];
         return arr;
+    }
 
-    const auto& grid = engine->get_grid();
-    arr.resize(grid.size());
-
-    std::memcpy(arr.ptrw(), grid.data(), grid.size());
-
-    return arr;
 }
