@@ -20,7 +20,6 @@ var generation_history: PackedInt32Array
 var current_step_index: int = 0
 
 var steps_per_frame: int = 1
-var animation_delay: float = 0.02 
 var time_passed: float = 0.0
 
 func _ready() -> void:
@@ -41,14 +40,19 @@ func _process(delta: float) -> void:
 		time_passed = 0.0
 
 	if is_building:
-		time_passed += delta
-		if time_passed >= animation_delay:
-			time_passed -= animation_delay
-			_animate_build_steps()
+		var dynamic_delay = ui_controller.current_animation_delay
+		
+		if dynamic_delay == 0.0:
+			while current_step_index < generation_history.size():
+				_animate_build_steps()
+		else:
+			time_passed += delta
+			if time_passed >= dynamic_delay:
+				time_passed -= dynamic_delay
+				_animate_build_steps()
 
 func _generate_new_maze(w: int, h: int, s: int, algo: int) -> void:
-	if is_building or task_id != -1:
-		return
+	if is_building or task_id != -1: return
 		
 	if icon_sprite:
 		icon_sprite.visible = false
@@ -66,8 +70,8 @@ func _animate_build_steps() -> void:
 		var x = generation_history[current_step_index]
 		var y = generation_history[current_step_index + 1]
 		var cell_type = generation_history[current_step_index + 2]
-		
 		var atlas_coord = WALL_ATLAS_COORD
+		
 		if cell_type == 1: atlas_coord = PATH_ATLAS_COORD
 		elif cell_type == 2: atlas_coord = START_ATLAS_COORD
 		elif cell_type == 3: atlas_coord = END_ATLAS_COORD
